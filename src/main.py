@@ -34,7 +34,7 @@ async def update_loop(setpoint: float):
 
     print(f"Starting PID, setpoint={setpoint}")
     pid = PID(1, 0.1, 0.05, setpoint=setpoint)
-    pid.output_limits = (0, 1)
+    pid.output_limits = (-1, 0)
 
     while loop_running:
         temp = await get_system_temp()
