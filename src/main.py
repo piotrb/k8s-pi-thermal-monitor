@@ -38,7 +38,7 @@ async def update_loop(setpoint: float):
         print(f"temp: {temp} v: {v}")
         await asyncio.sleep(1)
 
-def sigint_handler(sig, frame):
+def sig_handler(sig, frame):
     global loop_running
     print(f'Got signal: {sig}. Stopping loop.')
     loop_running = False
