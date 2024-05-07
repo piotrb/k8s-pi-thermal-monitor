@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: k8s-pi-thermal-monitor
+spec:
+  selector:
+    matchLabels:
+      app: k8s-pi-thermal-monitor
+  template:
+    metadata:
+      labels:
+        app: k8s-pi-thermal-monitor
+    spec:
+      containers:
+      - name: main
+        image: {{ .Values.image }}
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        volumeMounts:
+        - mountPath: /sys/class/thermal/thermal_zone0/temp
+          name: temperature
+      volumes:
+      - name: temperature
+        hostPath:
+          path: /sys/class/thermal/thermal_zone0/temp
