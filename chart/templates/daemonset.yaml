@@ -21,6 +21,8 @@ spec:
               fieldPath: spec.nodeName
         - name: PIGPIO_ADDR
           value: {{ .Values.settings.PIGPIO_ADDR }}
+        - name: SETPOINT
+          value: {{ .Values.settings.SETPOINT }}
         volumeMounts:
         - mountPath: /sys/class/thermal/thermal_zone0/temp
           name: temperature
