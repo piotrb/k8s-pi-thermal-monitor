@@ -25,4 +25,4 @@ COPY src /app/src
 
 ENV GPIOZERO_PIN_FACTORY=pigpio
 
-ENTRYPOINT [ "python3", "src/main.py" ]
+ENTRYPOINT [ "python3", "-u", "src/main.py" ]
