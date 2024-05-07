@@ -1,2 +1,3 @@
 aiofiles
 simple-pid
+gpiozero

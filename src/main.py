@@ -5,9 +5,13 @@ import aiofiles
 import aiofiles.base
 
 from simple_pid import PID
+from gpiozero import PWMOutputDevice
 
 THERMAL_ZONE = os.environ.get("THERMAL_ZONE", "/sys/class/thermal/thermal_zone0/temp")
 SETPOINT = float(os.environ.get("SETPOINT", "40"))
+
+GPIO_PWN_PIN = int(os.environ.get("GPIO_PWN_PIN", "3"))
+GPIO_TAC_PIN = int(os.environ.get("GPIO_TAC_PIN", "2"))
 
 async def get_system_temp():
   async with aiofiles.open(THERMAL_ZONE) as f:
@@ -17,6 +21,9 @@ async def get_system_temp():
 loop_running = True
 
 async def main():
+    pwm = PWMOutputDevice(pin=GPIO_PWN_PIN, frequency=25000)
+    pwm.value = 0.0
+
     print("Starting update loop")
     await update_loop(setpoint=SETPOINT)
     print("Exiting update loop")
