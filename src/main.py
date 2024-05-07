@@ -40,9 +40,10 @@ async def update_loop(setpoint: float):
 
 def sigint_handler(sig, frame):
     global loop_running
-    print('You pressed Ctrl+C!')
+    print(f'Got signal: {sig}. Stopping loop.')
     loop_running = False
 
-signal.signal(signal.SIGINT, sigint_handler)
+signal.signal(signal.SIGINT, sig_handler)
+signal.signal(signal.SIGTERM, sig_handler)
 
 asyncio.run(main())
