@@ -21,7 +21,9 @@ async def get_system_temp():
 loop_running = True
 
 async def main():
+    print("Initializing PWM")
     pwm = PWMOutputDevice(pin=GPIO_PWN_PIN, frequency=25000)
+    print("Setting PWM to 0")
     pwm.value = 0.0
 
     print("Starting update loop")
