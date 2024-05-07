@@ -40,6 +40,7 @@ async def update_loop(setpoint: float):
         temp = await get_system_temp()
         v = pid(temp)
         print(f"temp: {temp}/{setpoint} v: {v}")
+        pwm.value = (-v * -1)
         await asyncio.sleep(1)
 
 def sig_handler(sig, frame):
