@@ -19,6 +19,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+        - name: PIGPIO_ADDR
+          value: gpiod
         volumeMounts:
         - mountPath: /sys/class/thermal/thermal_zone0/temp
           name: temperature
