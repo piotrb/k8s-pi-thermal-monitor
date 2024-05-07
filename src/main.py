@@ -21,21 +21,25 @@ async def get_system_temp():
 loop_running = True
 
 async def main():
-    print("Initializing PWM")
-    pwm = PWMOutputDevice(pin=GPIO_PWN_PIN, frequency=25000)
-    print("Setting PWM to 0")
-    pwm.value = 0.0
-
     print("Starting update loop")
     await update_loop(setpoint=SETPOINT)
     print("Exiting update loop")
 
 async def update_loop(setpoint: float):
+    print("Initializing PWM")
+    pwm = PWMOutputDevice(pin=GPIO_PWN_PIN, frequency=25000)
+
+    print("Setting PWM to 0")
+    pwm.value = 0.0
+
+    print(f"Starting PID, setpoint={setpoint}")
     pid = PID(1, 0.1, 0.05, setpoint=setpoint)
+    pid.output_limits = (0, 1)
+
     while loop_running:
         temp = await get_system_temp()
         v = pid(temp)
-        print(f"temp: {temp} v: {v}")
+        print(f"temp: {temp}/{setpoint} v: {v}")
         await asyncio.sleep(1)
 
 def sig_handler(sig, frame):
