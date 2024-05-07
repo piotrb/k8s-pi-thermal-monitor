@@ -1,1 +1,4 @@
 image: ghcr.io/piotrb/k8s-pi-thermal-monitor:latest
+
+settings:
+  PIGPIO_ADDR: gpiod
