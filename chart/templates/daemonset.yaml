@@ -23,6 +23,10 @@ spec:
           value: {{ .Values.settings.PIGPIO_ADDR }}
         - name: SETPOINT
           value: {{ .Values.settings.SETPOINT | toString | toYaml }}
+        - name: PID_KI
+          value: {{ .Values.settings.KI | toString | toYaml }}
+        - name: PID_KD
+          value: {{ .Values.settings.KD | toString | toYaml }}
         volumeMounts:
         - mountPath: /sys/class/thermal/thermal_zone0/temp
           name: temperature

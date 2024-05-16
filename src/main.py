@@ -13,6 +13,10 @@ SETPOINT = float(os.environ.get("SETPOINT", "40"))
 GPIO_PWN_PIN = int(os.environ.get("GPIO_PWN_PIN", "3"))
 GPIO_TAC_PIN = int(os.environ.get("GPIO_TAC_PIN", "2"))
 
+Kp = float(os.environ.get("PID_KP", "-1"))
+Ki = float(os.environ.get("PID_KI", "0.1"))
+Kd = float(os.environ.get("PID_KD", "0.05"))
+
 async def get_system_temp():
   async with aiofiles.open(THERMAL_ZONE) as f:
     rawTemp = await f.read()
@@ -33,14 +37,14 @@ async def update_loop(setpoint: float):
     pwm.value = 0.0
 
     print(f"Starting PID, setpoint={setpoint}")
-    pid = PID(1, 0.1, 0.05, setpoint=setpoint)
-    pid.output_limits = (-1, 0)
+    pid = PID(Kp, Ki, Kd, setpoint=setpoint)
+    pid.output_limits = (0, 100)
 
     while loop_running:
         temp = await get_system_temp()
         v = pid(temp)
-        print(f"temp: {temp}/{setpoint} v: {-v}")
-        pwm.value = -v
+        print(f"temp: {temp}/{setpoint} v: {v}")
+        pwm.value = v/100.0
         await asyncio.sleep(1)
 
 def sig_handler(sig, frame):
