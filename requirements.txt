@@ -1,4 +1,0 @@
-aiofiles
-simple-pid
-gpiozero
-pigpio

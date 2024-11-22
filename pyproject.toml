@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "k8s-pi-thermal-monitor"
+version = "0.1.0"
+description = ""
+authors = ["Piotr Banasik <piotr.banasik@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiofiles = "^24.1.0"
+pigpio = "^1.78"
+simple-pid = "^2.0.1"
+gpiozero = "^2.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
